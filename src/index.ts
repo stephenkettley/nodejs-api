@@ -77,6 +77,7 @@ app.delete("/posts/:id", async (req, res, next) => {
         id: Number(req.params.id),
       },
     });
+    res.sendStatus(200);
   } catch (error: any) {
     next(error.message);
   }
