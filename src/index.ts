@@ -45,10 +45,10 @@ app.get("/posts/:id", async (req, res, next) => {
   try {
     const post = await prisma.post.findUnique({
       where: {
-        id: Number(req.params.id)
-      }
-    })
-    res.json{post}
+        id: Number(req.params.id),
+      },
+    });
+    res.json({ post });
   } catch (error: any) {
     next(error.message);
   }
@@ -61,10 +61,9 @@ app.put("/posts/:id", async (req, res, next) => {
       where: {
         id: Number(req.params.id),
       },
-      data: req.body
-      
-    })
-    res.json({post})
+      data: req.body,
+    });
+    res.json({ post });
   } catch (error: any) {
     next(error.message);
   }
@@ -75,37 +74,35 @@ app.delete("/posts/:id", async (req, res, next) => {
   try {
     await prisma.post.delete({
       where: {
-        id: Number(req.params.id)
-      }
-    })
+        id: Number(req.params.id),
+      },
+    });
   } catch (error: any) {
     next(error.message);
   }
 });
-
 
 // get a post that belong to a user
 app.get("/users/:id/posts", async (req, res, next) => {
   try {
     const usersWithPosts = await prisma.user.findUnique({
       where: {
-        id: Number(req.params.id)
+        id: Number(req.params.id),
       },
       include: {
         posts: {
           where: {
-            published: true
-          }
-        }
-      }
-    })
-    const posts = usersWithPosts?.posts
-    res.json({posts})
+            published: true,
+          },
+        },
+      },
+    });
+    const posts = usersWithPosts?.posts;
+    res.json({ posts });
   } catch (error: any) {
     next(error.message);
   }
 });
-
 
 app.listen(3000, () => {
   console.log("App is listening on port 3000...");
